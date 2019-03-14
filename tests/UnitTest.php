@@ -27,6 +27,8 @@ class UnitTest extends TestCase
         $email4 = 'Foo@Example.com'; // not valid
         $email5 = 'foo~noo@example.com'; // not valid
         $email6 = 'foo@example.net'; // not valid
+        $email7 = 'a@b.c'; // not valid
+        $email8 = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@b.c'; // not valid
 
         $validation = new \App\Services\Validation();
 
@@ -36,6 +38,8 @@ class UnitTest extends TestCase
         $this->assertEquals(0, $validation->email($email4));
         $this->assertEquals(0, $validation->email($email5));
         $this->assertEquals(0, $validation->email($email6));
+        $this->assertEquals(0, $validation->email($email7));
+        $this->assertEquals(0, $validation->email($email8));
 
     }
 
@@ -76,5 +80,18 @@ class UnitTest extends TestCase
 
         $response = json_decode($sms->send($data), 1);
         $this->assertEquals('false', $response['success']);
+    }
+
+    public function testCode()
+    {
+        $code1 = '1234'; // valid
+        $code2 = '123'; // not valid
+        $code3 = '123a'; // not valid
+
+        $validation = new \App\Services\Validation();
+
+        $this->assertEquals(1, $validation->code($code1));
+        $this->assertEquals(0, $validation->code($code2));
+        $this->assertEquals(0, $validation->code($code3));
     }
 }

@@ -20,7 +20,7 @@ class Validation
 
     public function email($email)
     {
-        $pattern = '/^((?:[A-Za-z0-9_.-][A-Za-z0-9_.-]+))(@)([a-z]+)(\\.)(com)$/';
+        $pattern = '/^(?=.{7,20}$)[A-Za-z0-9_.-]+(\.[A-Za-z0-9_.-]+)*@[a-z]+(\.com)$/';
 
         return preg_match($pattern, $email);
     }
@@ -30,5 +30,12 @@ class Validation
         $pattern = "/(9)(6)(2)(7)(\\d)(\\d)(\\d)(\\d)(\\d)(\\d)(\\d)(\\d)/is";
 
         return preg_match($pattern, $phone);
+    }
+
+    public function code($code)
+    {
+        $pattern = "/^\d{4}$/";
+
+        return preg_match($pattern, $code);
     }
 }
