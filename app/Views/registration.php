@@ -78,7 +78,7 @@
         </div>
 
         <div class="form-group">
-            <button type="button" class="btn btn-primary">Send SMS to Verify</button>
+            <button id="verify" type="button" class="btn btn-primary">Send SMS to Verify</button>
         </div>
 
         <div class="form-group">
@@ -101,6 +101,27 @@
         <button type="submit" class="btn btn-default" name="register">Register</button>
     </form>
 </div>
-
+<script>
+    $(function () {
+        // Handler for .ready() called.
+        $("#verify").click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/index.php",
+                data: {
+                    verify_phone: $('#phone_number').val(),
+                    access_token: '123456'
+                },
+                success: function (result) {
+                    alert(result);
+                },
+                error: function (result) {
+                    alert('error');
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

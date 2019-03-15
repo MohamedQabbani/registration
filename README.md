@@ -5,3 +5,4 @@ composer install
 
 # To run unit tests
  ../vendor/bin/phpunit UnitTest
+ ../vendor/bin/phpunit PhoneCodeTest
