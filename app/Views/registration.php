@@ -21,7 +21,7 @@
             <small>Alphabetical (A-Z|a-z) only, Number of letters allowed 2-20.</small>
             <?php if (isset($errors['first_name'])): ?>
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    <strong>Not Valid!</strong> First name is not valid.
+                    <strong>Not Valid!</strong> <?php echo $errors['first_name']; ?>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -36,7 +36,7 @@
             <small>Alphabetical (A-Z|a-z) only, Number of letters allowed 2-20.</small>
             <?php if (isset($errors['last_name'])): ?>
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    <strong>Not Valid!</strong> Last name is not valid.
+                    <strong>Not Valid!</strong> <?php echo $errors['last_name']; ?>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -51,7 +51,7 @@
             <small>Number of characters allowed 7-20, Only this format is allowed (a-z|A-Z|1-9|.-_)@(a-z).com.</small>
             <?php if (isset($errors['email_name'])): ?>
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    <strong>Not Valid!</strong> Email name is not valid.
+                    <strong>Not Valid!</strong> <?php echo $errors['email_name']; ?>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -69,7 +69,7 @@
             </small>
             <?php if (isset($errors['phone_number'])): ?>
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    <strong>Not Valid!</strong> Phone number is not valid.
+                    <strong>Not Valid!</strong> <?php echo $errors['phone_number']; ?>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -78,7 +78,7 @@
         </div>
 
         <div class="form-group">
-            <button id="verify" type="button" class="btn btn-primary">Send SMS to Verify</button>
+            <button id="verify" type="button" class="btn btn-info">Send SMS to Verify</button>
         </div>
 
         <div class="form-group">
@@ -90,7 +90,7 @@
             </small>
             <?php if (isset($errors['verification_code'])): ?>
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    <strong>Not Valid!</strong> Verification code is not valid.
+                    <strong>Not Valid!</strong> <?php echo $errors['verification_code']; ?>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -98,7 +98,7 @@
             <?php endif; ?>
         </div>
 
-        <button type="submit" class="btn btn-default" name="register">Register</button>
+        <button type="submit" class="btn btn-primary" name="register">Register</button>
     </form>
 </div>
 <script>

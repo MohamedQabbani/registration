@@ -9,6 +9,7 @@
 namespace App\Controllers;
 
 use App\Models\PhoneCode;
+use App\Models\User;
 use App\Services\SMS;
 
 class Registration
@@ -27,31 +28,46 @@ class Registration
 
             $first_name = $_POST['first_name'];
             if (!$validation->name($first_name)) {
-                $errors['first_name'] = $first_name;
+                $errors['first_name'] = 'First name is not valid.';
             }
 
             $last_name = $_POST['last_name'];
             if (!$validation->name($last_name)) {
-                $errors['last_name'] = $last_name;
+                $errors['last_name'] = 'Last name is not valid.';
             }
 
             $email_name = $_POST['email_name'];
             if (!$validation->email($email_name)) {
-                $errors['email_name'] = $email_name;
+                $errors['email_name'] = 'Email name is not valid.';
             }
 
             $phone_number = $_POST['phone_number'];
             if (!$validation->phone($phone_number)) {
-                $errors['phone_number'] = $phone_number;
+                $errors['phone_number'] = 'Phone number is not valid.';
             }
 
             $verification_code = $_POST['verification_code'];
             if (!$validation->code($verification_code)) {
-                $errors['verification_code'] = $verification_code;
+                $errors['verification_code'] = 'Verification code is not valid.';
             }
 
             if (empty($errors)) {
-                // save user
+                $phoneCode = new PhoneCode();
+                $result = $phoneCode->byPhone($phone_number);
+                if (count($result) > 0) {
+                    if ($verification_code != $result[0]['code']) {
+                        $errors['verification_code'] = 'Verification code is not true.';
+                    } else {
+                        // save user
+                        if ($this->saveUser($first_name, $last_name, $email_name, $phone_number)) {
+                            return require_once 'app/Views/success.php';
+                        } else {
+                            return require_once 'app/Views/fail.php';
+                        }
+                    }
+                } else {
+                    $errors['verification_code'] = 'You must verify phone first.';
+                }
             }
         }
 
@@ -101,5 +117,27 @@ class Registration
             echo 'Can not send code';
             die;
         }
+    }
+
+    /**
+     * @param $first_name
+     * @param $data
+     * @param $last_name
+     * @param $email_name
+     * @param $phone_number
+     * @return bool
+     */
+    public function saveUser($first_name, $last_name, $email_name, $phone_number)
+    {
+        $user = new User();
+
+        $data['first_name'] = $first_name;
+        $data['last_name'] = $last_name;
+        $data['email_name'] = $email_name;
+        $data['phone_number'] = $phone_number;
+        $data['created_at'] = $user->createdAt();
+        $data['updated_at'] = $user->updatedAt();
+
+        return $user->save($data);
     }
 }
