@@ -55,16 +55,16 @@ class Registration
                 $phoneCode = new PhoneCode();
                 $result = $phoneCode->byPhone($phone_number);
                 if (count($result) > 0) {
-                    if ($verification_code != $result[0]['code']) {
-                        $errors['verification_code'] = 'Verification code is not true.';
+//                    if ($verification_code != $result[0]['code']) {
+//                        $errors['verification_code'] = 'Verification code is not true.';
+//                    } else {
+                    // save user
+                    if ($this->saveUser($first_name, $last_name, $email_name, $phone_number)) {
+                        return require_once 'app/Views/success.php';
                     } else {
-                        // save user
-                        if ($this->saveUser($first_name, $last_name, $email_name, $phone_number)) {
-                            return require_once 'app/Views/success.php';
-                        } else {
-                            return require_once 'app/Views/fail.php';
-                        }
+                        return require_once 'app/Views/fail.php';
                     }
+//                    }
                 } else {
                     $errors['verification_code'] = 'You must verify phone first.';
                 }
